@@ -1,5 +1,10 @@
 # mp2t-error-detector
-Bash script for detecting mp2t errors in a collection of pcap files. Normally such analysis is challenging due to the volume of packets and the size of packets.
+Bash script for detecting mp2t errors in a collection of pcap files. Normally such analysis is challenging due to the volume of packets and the size of the packet data.
+
+This program iterates through a collection of sequentially named PCAP files (an output of Wireshark for instance) and runs the output against tshark for input errors. All the input error packets are packaged in a new PCAP. This new PCAP is significantly smaller and easier to analyze. 
+
+Using this script various capture points on a network can be checked to see if errors are present, allowing one to narrow down the problem.
+
 ## Installation
 ### Prequisites
 - Tshark must be in your path
@@ -13,8 +18,8 @@ Run the BASH script (in previously aforementioned directory) and then open the o
 ### Problem Description
 Streaming errors can be difficult to narrow down in a network due to the sheer volume of data being sent. That is an end user/app support technician can report drops, but as to where these drops are occurring is the question? Packet capturing is required but this proves a challenge.
 
-### Capture and Analysis Mitigation Techniques
-Main problems:
+### Capture and Analysis Techniques
+Main problems with Traditional capture of MP2T streams:
 
 - Capturing traffic in a fashion where the data integrity is maintained.
 - Analyzing the captured data.
@@ -29,6 +34,7 @@ The first of these issues can be addressed by using a dedicated piece of capture
 The second issue pertaining to analysis:
 
 - The reason you would have 200 files and not 1 200GB file is that when you need to open it up for analysis all your memory could be wiped out. Also processing even a 1GB file takes time in Wireshark.
+- The shell script then can summarise these 200 files into a file that is only a few MegaBytes big. Timestamps are preserved, so the detail of the events are there and graphing the output is very insightful.
 
 
 ## History
